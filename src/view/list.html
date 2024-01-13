@@ -1,0 +1,40 @@
+<!-- list-products.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List Products</title>
+  <link rel="stylesheet" href="viewStyle.css">
+</head>
+<body>
+  <header>
+    <h1>List of Products</h1>
+  </header>
+
+  <div id="productList"></div>
+
+  <script>
+    // Fetch products from the server and render them on the page
+    fetch('/get-products')
+      .then(response => response.json())
+      .then(products => {
+        const productListDiv = document.getElementById('productList');
+        console.log(products)
+        products.forEach(product => {
+          const productDiv = document.createElement('div');
+          productDiv.innerHTML = `
+            <h3>${product.name}</h3>
+            <p>Price: $${product.price}</p>
+            <p>Description: ${product.description}</p>
+            <hr>
+          `;
+          productListDiv.appendChild(productDiv);
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  </script>
+</body>
+</html>
